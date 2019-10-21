@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
  * 编程的方式获取Bean
  * Create by yster@foxmail.com 2019/2/2 0002 23:47
  */
-@Component
 public class ApplicationContextHelper implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
 
+    @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
         applicationContext = context;
     }

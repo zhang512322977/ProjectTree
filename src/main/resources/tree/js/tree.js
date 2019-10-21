@@ -38,7 +38,7 @@ function isEmpty(obj) {
 $.ajaxSettings.async = false;
 $(".tree").each(function () {
     var that = $(this);
-    $.get('/projecttree/' + that.attr("id"), function (data) {
+    $.get('/projecttest/projecttree/' + that.attr("id"), function (data) {
         f(data);
         that.html("<ul>" + text + "</ul>");
         text = "";

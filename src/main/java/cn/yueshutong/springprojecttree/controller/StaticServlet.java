@@ -3,24 +3,48 @@ package cn.yueshutong.springprojecttree.controller;
 import cn.yueshutong.springprojecttree.util.ReadClasspathFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@RestController
-public class StaticController {
+@WebServlet(name = "StaticServlet", urlPatterns = "/tree/*", loadOnStartup = 1)
+public class StaticServlet extends HttpServlet {
 
-    private Logger logger = LoggerFactory.getLogger(StaticController.class);
+    private Logger logger = LoggerFactory.getLogger(StaticServlet.class);
+
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException
+    {
+        doPost(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        view_js(resp, req);
+    }
 
     /**
      * 解决静态资源不加载
      */
-    @RequestMapping(value = "/tree/**",method = RequestMethod.GET)
     public void view_js(HttpServletResponse response, HttpServletRequest request) throws IOException {
         String uri = request.getRequestURI().trim();
+        int toIndex = uri.indexOf("/tree");
+        uri = uri.substring(toIndex,uri.length());
+        logger.debug("uri = " + uri);
         if (uri.endsWith(".js")){
             response.setContentType("application/javascript");
         }else if (uri.endsWith(".css")){

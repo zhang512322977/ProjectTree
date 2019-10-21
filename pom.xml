@@ -3,16 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.10.RELEASE</version>
-        <relativePath/>
-    </parent>
 
-    <groupId>cn.yueshutong</groupId>
-    <artifactId>tree-spring-boot-starter</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <groupId>cn.migu</groupId>
+    <artifactId>tree-spring-starter</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>Spring Project Tree</name>
     <url>https://github.com/yueshutong/Spring-Project-Tree</url>
@@ -25,20 +19,48 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <artifactId>spring-aop</artifactId>
+            <groupId>org.springframework</groupId>
+            <version>4.3.14.RELEASE</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.5.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.14.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.60</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -48,6 +70,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -70,6 +93,29 @@
                     </execution>
                 </executions>
             </plugin>
+
+<!--            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <id>linux</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <phase>install</phase>
+                        <configuration>
+                            <groupId>cn.zhang</groupId>
+                            <artifactId>tree-spring-starter</artifactId>
+                            <version>${project.version}</version>
+                            <classifier>linux</classifier>
+                            <packaging>jar</packaging>
+                            <file>${project.build.directory}/${project.build.finalName}.jar</file>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
 
@@ -85,11 +131,11 @@
     <distributionManagement>
         <repository>
             <id>releases_maven</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <url>http://nexus.cmread.com:8031/nexus/content/groups/maven_dev</url>
         </repository>
         <snapshotRepository>
-            <id>snapshots_maven</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>maven_repos</id>
+            <url>http://nexus.cmread.com:8031/nexus/content/groups/maven_dev</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -125,6 +171,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
+                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -135,23 +182,7 @@
                         </executions>
                     </plugin>
                     <!-- Javadoc -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <additionalJOptions>
-                                <additionalJOption>-Xdoclint:none</additionalJOption>
-                            </additionalJOptions>
-                        </configuration>
-                    </plugin>
+                    
                     <!-- GPG -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>

@@ -6,9 +6,9 @@ function GetQueryString(name) {
 }
 //Vue
 var data;
-var url = "/projecttree";
+var url = "/projecttest/projecttree";
 if (GetQueryString("all")!==null) {
-    url = "/projecttree/all";
+    url = "/projecttest/projecttree/all";
 }
 $.ajax({
     url: url,
